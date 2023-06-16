@@ -1,4 +1,5 @@
 <?php 
+namespace kuaminika\generics;
 
 class Template_Navigation
 {

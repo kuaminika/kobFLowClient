@@ -1,10 +1,8 @@
 <?php 
-require_once(__DIR__."/../_generics/configs.php");
-require_once(__DIR__."/../_generics/tmplt_nav.php");
-// TODO refactor with pageHelper
-$navTmplt = new Template_Navigation($configs);
-$pageName = "Stores";
-
+ require_once(__DIR__."/../_generics/pageIgniter.php");
+ $pageHelper =\kuaminika\generics\PageIgniter::Ignite(["configs"=>$configs,"pageName"=>"Stores","pageTitle"=>"Stores"]);
+ $navTmplt= $pageHelper->getNavigation();
+ $pageName = $pageHelper->getPageName();
 ?>
 <!doctype html>
 <html lang="en" data-bs-theme="auto">

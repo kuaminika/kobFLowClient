@@ -37,7 +37,6 @@
         border-width: 1px 0;
         box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
       }
-
       .b-example-vr {
         flex-shrink: 0;
         width: 1.5rem;
@@ -132,13 +131,18 @@
       <div class="my-4 w-100" id="myChart" width="900" height="380">is htis</div>
 
       <h2>Records</h2>
-      <div id="data" class="table-responsive">
-        <table class="table table-striped table-sm">
-          <?php echo $generatedThead?>
-          <tbody>
-            <?php echo $jsGeneratorScript?>
-          </tbody>
-        </table>
+      <div class="row">
+          <div id="data" class="table-responsive col-md-6">
+            <table class="table table-striped table-sm">
+              <?php echo $generatedThead?>
+              <tbody>
+                <?php echo $jsGeneratorScript?>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-6">
+             <?php echo isset($form)?$form:""; ?>
+          </div>
       </div>
     </main>
   </div>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="tools.js?v1"></script>
+    <script>
+            function showIt(it)
+            {
+              let  fetchResult =document.getElementById("fetchResult");
+               console.log("it is",it);
+              fetchResult.innerText = JSON.stringify(it);
+            }
+            function showError(error)
+            {
+                
+              let  fetchResult =document.getElementById("fetchResult");
+              fetchResult
+            }
+            let url = "";
+            let currentTest = 0;
+
+
+
+            let tests = [];
+
+
+
+            tests[0]=function(){
+                 url = `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=getAll&sourceContext=Expense`;
+                fetch(url).then(r => r.json()).then(showIt);
+            }
+            tests[1]=function(){
+                    url = `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=add`;
+                    let specimen =  {
+                        "id": 3,
+                        "description": "added with expense.html",
+                        "ownerId": 1,
+                        "amount": 1500.000,
+                        "merchantId": 3,
+                        "merchantName": "Home Depot",
+                        "createdDate": "2023-06-16T15:57:51",
+                        "kobHolderName": "wealth card",
+                        "kobHolderId": 4,
+                        "categoryId": 1,
+                        "categoryName": "Episri"
+                    }
+                    let wrap = {payLoad:specimen,sourceContext:"Expense"};
+                   
+                    postWrap(url,wrap).then(r => r.json()).then(showIt)
+                }
+
+                test[2] = function(){
+                    url =`https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=add`;
+
+
+                }
+                function doNextTest()
+                {
+                    let n = tests.length;
+
+                    if(currentTest>= n) 
+                    {
+                        showIt("no more tests");
+                        return;
+                    }
+                    let nextTest = tests[currentTest];
+
+                    nextTest();
+                    currentTest++;
+                }
+     </script>
+    <title>ExpenseTests</title>
+    <style>
+        .btn{cursor: pointer;}
+        .btn:hover{
+            border: 1.5px solid rgb(62, 24, 24);
+        }
+    </style>
+</head>
+<body>
+    <div class="btn" onclick="doNextTest()" style="border: 1px solid red;padding:1%;margin-bottom:2%" >click to do next test</div>
+    <div id="fetchResult"></div>
+</body>
+</html>

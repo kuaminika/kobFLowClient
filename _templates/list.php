@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <title><?php echo $pageTitle?></title>
 
-    
+    <?php echo isset(  $cssStyleInclusions)?  $cssStyleInclusions:"" ;?>
 
     
 

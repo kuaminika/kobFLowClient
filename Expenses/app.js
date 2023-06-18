@@ -96,6 +96,9 @@ function App(args){
                 let templateAddress = "#accountField .list-wrap template ";
                 self.account= {  contextName,data ,templateAddress };
                 chooserFeed(self.account);
+
+
+                
                   
           });
     

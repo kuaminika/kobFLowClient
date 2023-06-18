@@ -1,0 +1,12 @@
+
+.chooserList {max-height:200px; overflow:auto}
+.chooserList .list-group-item:hover
+{
+    background-color:#5d92c7;
+    border: 1px solid #000;
+    color:#fff;
+}
+.chooserList-hidden{ display:none !important}
+.chooserList-shown{ display:block !important}
+.chooserList .list-group-item {  cursor:pointer; }
+

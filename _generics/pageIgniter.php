@@ -16,6 +16,7 @@ class PageIgniter
        $result->pageTitle = $args["pageTitle"];
        $result->navTmplt = new Template_Navigation($configs);
        $result->jsScriptList = array_key_exists("jsScriptList",$args)? $args["jsScriptList"]:[];
+       $result->cssScriptList = array_key_exists("styleScriptList",$args)? $args["styleScriptList"]:[];
        return $result;
     }
 

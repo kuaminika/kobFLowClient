@@ -5,12 +5,14 @@
  $pageArgs["configs"] = $configs;
  $pageArgs["pageName"] = "Expenses";
  $pageArgs["pageTitle"]= "Expenses";
- $pageArgs["jsScriptList"]= ["app.js?v6"];
+ $pageArgs["jsScriptList"]= ["app.js?v6","../_jsWidgets/kChooser.js?v1"];
+ $pageArgs["styleScriptList"]= [ "../_jsWidgets/kChooser.css?v1"];
 //TODO modify list.php template to react if not all these variables are not provided
 $pageHelper =\kuaminika\generics\PageIgniter::Ignite($pageArgs);
 $navTmplt= $pageHelper->getNavigation();
 $pageName = $pageHelper->getPageName();
 $pageTitle = $pageHelper->getPageTitle();
+$cssStyleInclusions = $pageHelper->generateStyles();
 $jsScriptsInclusions = $pageHelper->generateJSScriptTags();
 $customJsScript = ' app.load({title :"'.$pageTitle.'"})';
 $generatedThead = '<thead>
@@ -60,6 +62,16 @@ $form = '
         </div>
       </div>
 
+      <div id="kChoserTest">
+      </div>
+      <script>
+      document.addEventListener("DOMContentLoaded", function(){ 
+          // your code goes here
+         let chooser =  app.createChooser({title:"Test",contextName:"test",holderElementid:"kChoserTest"});
+         chooser.init();
+        }, false);
+         
+      </script>
 
       <div id="merchantField" class="form-group mt-1">
       '.generateListChooser(["title"=>"Merchant","contextName"=>"merchant","id"=>"merchantField"]).'

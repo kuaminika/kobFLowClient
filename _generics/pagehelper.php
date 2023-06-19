@@ -30,6 +30,16 @@ class PageHelper
         return $this->jsScriptList;
     }
 
+    public function generateStyles()
+    {
+        $result = "";
+
+        foreach($this->cssScriptList as $scriptName)
+        {
+            $result.='<link href="'.$scriptName.'" rel="stylesheet">';
+        }
+        return $result;
+    }
     public function generateJSScriptTags()
     {
         $result = "";

@@ -1,12 +1,12 @@
 <?php 
  require_once(__DIR__."/../_generics/pageIgniter.php");
- require_once(__DIR__."/../_templates/_partial_listChooser.php");
+
  $pageArgs = [];
  $pageArgs["configs"] = $configs;
  $pageArgs["pageName"] = "Expenses";
  $pageArgs["pageTitle"]= "Expenses";
- $pageArgs["jsScriptList"]= ["app.js?v6","../_jsWidgets/kChooser.js?v1"];
- $pageArgs["styleScriptList"]= [ "../_jsWidgets/kChooser.css?v1"];
+ $pageArgs["jsScriptList"]= ["app.js?v8","../_jsWidgets/kChooser.js?v2"];
+ $pageArgs["styleScriptList"]= [ "../_jsWidgets/kChooser.css?v3"];
 //TODO modify list.php template to react if not all these variables are not provided
 $pageHelper =\kuaminika\generics\PageIgniter::Ignite($pageArgs);
 $navTmplt= $pageHelper->getNavigation();
@@ -52,7 +52,7 @@ $form = '
       <div class="form-group">
         <label class="control-label col-sm-2" for="description">Description:</label>
         <div class="col-sm-12">
-          <textarea  class="form-control"  style="width:100%"></textarea>
+          <textarea  class="form-control" name="description"  style="width:100%"></textarea>
         </div>
       </div>
       <div class="form-group">
@@ -62,29 +62,22 @@ $form = '
         </div>
       </div>
 
-      <div id="kChoserTest">
-      </div>
+      <div id="merchantField" class="form-group mt-1"> </div>
+      <div id="categoryField" class="form-group mt-1"> </div>      
+      <div id="accountField" class="form-group mt-1"> </div>
+
       <script>
-      document.addEventListener("DOMContentLoaded", function(){ 
-          // your code goes here
-         let chooser =  app.createChooser({title:"Test",contextName:"test",holderElementid:"kChoserTest"});
-         chooser.init();
-        }, false);
+          document.addEventListener("DOMContentLoaded", function(){ 
+            // your code goes here
+            let chooser =  app.createChooser({title:"Merchant",contextName:"merchant",holderElementid:"merchantField"});
+            chooser.init();
+            chooser =  app.createChooser({title:"Category",contextName:"category",holderElementid:"categoryField"});
+            chooser.init();
+            chooser =  app.createChooser({title:"Kob holder",contextName:"account",holderElementid:"accountField"});
+            chooser.init();
+          }, false);
          
       </script>
-
-      <div id="merchantField" class="form-group mt-1">
-      '.generateListChooser(["title"=>"Merchant","contextName"=>"merchant","id"=>"merchantField"]).'
-        
-      </div>
-      <div id="categoryField" class="form-group mt-1">
-      '.generateListChooser(["title"=>"Category","contextName"=>"category","id"=>"categoryField"]).'
-      </div>
-
-      
-      <div id="accountField" class="form-group mt-1">
-      '.generateListChooser(["title"=>"Kob holder","contextName"=>"account","id"=>"accountField"]).'
-      </div>
 
       <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">

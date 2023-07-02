@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="tools.js?v1"></script>
+    <link rel="stylesheet" href="style.css?2">
+    <script>
+            function showIt(it)
+            {
+              let  fetchResult =document.getElementById("fetchResult");
+               console.log("it is",it);
+              fetchResult.innerText = JSON.stringify(it,null, 2);
+            }
+            function log(...args)
+            {
+                let it = args[0];
+                console.log(args)
+              let  logStage =document.getElementById("log");
+              let log = document.createElement("div");
+              log.innerText = it;
+              log.className = `${log.className} log-message`;
+              logStage.append(log);
+              const error = new Error();
+              const stackLines = error.stack.split('\n');
+               
+                const lineNumber = stackLines[2].match(/:(\d+):\d+/)[1];
+                const fileName = stackLines[1].match(/(\w+\.html)/)[1];
+                const logMessage = `<a href="view-source:${window.location.href}">${fileName}:${lineNumber}</a>`;
+
+                console.log(logMessage, ...args, it);
+            }
+            function showError(error)
+            {
+                
+              let  fetchResult =document.getElementById("fetchResult");
+              
+            }
+            let url = "";
+            let currentTest = 0;
+
+
+
+            let tests = [];
+
+            let fetchedData = [];
+
+
+            tests[0]=function(){
+
+                log("testing fetching all merchants");
+             
+                 url = `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=getAll&sourceContext=Merchant`;
+                fetch(url).then(r => r.json())
+                .then(d=>{fetchedData = d.subject;
+                    return fetchedData;
+                })
+                .then(showIt);
+            }
+            tests[1]=function(){
+                    url = `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=add`;
+                    let specimen =  {
+                        "name":`test${(new Date().getTime())}`
+                    }
+                    log(`adding a merchant with name ${specimen.name}`)
+                    let wrap = {payLoad:specimen,sourceContext:"Merchant"};
+                   
+                    postWrap(url,wrap).then(r => r.json()).then(showIt)
+                }
+
+                tests[2] = function(){
+                    url =`https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=update`;
+                    let specimen =  {
+                        "name":`test${(new Date().getTime())}`
+                    }
+                    log("testing updating")
+                    console.log("doing the update . will update any from ",fetchedData, fetchedData.length);
+                    const randomIndex = Math.floor(Math.random() * fetchedData.length);
+                    console.log("randomly got an index to get:",randomIndex);
+                    let before = fetchedData[randomIndex];
+                    specimen = {...before,...specimen};
+                    specimen.name = `${before.name}-${specimen.name}`;
+                    console.log("before, after: ",before,specimen);
+                    log(`changing name from ${before.name} to ${specimen.name} with id ${specimen.id}`)
+                    let wrap = {payLoad:specimen,sourceContext:"Merchant"};
+                    postWrap(url,wrap).then(r => r.json()).then(showIt)
+
+                }
+                function doNextTest()
+                {
+                    let n = tests.length;
+
+                    if(currentTest>= n) 
+                    {
+                        showIt("no more tests");
+                        return;
+                    }
+                    let nextTest = tests[currentTest];
+
+                    nextTest();
+                    currentTest++;
+                }
+     </script>
+    <title>Merchant tests</title>
+    <style>
+        .btn{cursor: pointer;}
+        .btn:hover{
+            border: 1.5px solid rgb(62, 24, 24);
+        }
+    </style>
+</head>
+<body>
+    <div class="btn" onclick="doNextTest()" style="border: 1px solid red;padding:1%;margin-bottom:2%" >click to do next test</div>
+    <div class="d-flex">
+        
+        <div id="fetchResult" class = "json-container  " style="width:45%"></div>
+        <div id="log"style="width:45%"></div>
+    </div>
+</body>
+</html>

@@ -16,3 +16,7 @@
     border: 2px solid brown;
     margin-top: 1%
   }
+  .btn{cursor: pointer;}
+  .btn:hover{
+      border: 1.5px solid rgb(62, 24, 24);
+  }

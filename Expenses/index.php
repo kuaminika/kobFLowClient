@@ -9,7 +9,7 @@
  $pageArgs["styleScriptList"]= [ "../_jsWidgets/kChooser.css?v3"];
 //TODO modify list.php template to react if not all these variables are not provided
 $pageHelper =\kuaminika\generics\PageIgniter::Ignite($pageArgs);
-$navTmplt= $pageHelper->getNavigation();
+$navTmplt= $pageHelper->getNavigation(); // will be used by  /../_templates/list.php
 $pageName = $pageHelper->getPageName();
 $pageTitle = $pageHelper->getPageTitle();
 $cssStyleInclusions = $pageHelper->generateStyles();

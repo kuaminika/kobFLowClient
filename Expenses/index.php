@@ -5,7 +5,7 @@
  $pageArgs["configs"] = $configs;
  $pageArgs["pageName"] = "Expenses";
  $pageArgs["pageTitle"]= "Expenses";
- $pageArgs["jsScriptList"]= ["app.js?v8","../_jsWidgets/kChooser.js?v2"];
+ $pageArgs["jsScriptList"]= ["app.js?v9","../_jsWidgets/kChooser.js?v2","../_jsWidgets/kTabNav.js?v1"];
  $pageArgs["styleScriptList"]= [ "../_jsWidgets/kChooser.css?v3"];
 //TODO modify list.php template to react if not all these variables are not provided
 $pageHelper =\kuaminika\generics\PageIgniter::Ignite($pageArgs);
@@ -16,9 +16,7 @@ $cssStyleInclusions = $pageHelper->generateStyles();
 $jsScriptsInclusions = $pageHelper->generateJSScriptTags();
 $customJsScript = ' app.load({title :"'.$pageTitle.'"})';
 $generatedThead = '<thead>
-<tr>
-  <th scope="col">#id</th>
-  <!--<th scope="col">Description</th>-->
+<tr> 
   <th scope="col">Merchant  </th>
   <th scope="col">Category</th>
   <th scope="col">Kob holder</th>
@@ -28,9 +26,7 @@ $generatedThead = '<thead>
 </thead>';
 $jsGeneratorScript = '
 <template  v-for="(expense, index) in data" >
-    <tr>
-      <td>{{expense.id}}</td>
-     <!-- <td>{{expense.description}}</td>-->
+    <tr  v-bind:id=" \'expense-\'+   expense.id"> 
       <td>{{expense.merchantName}}</td>
       <td>{{expense.categoryName}}</td>
       <td>{{expense.kobHolderName}}</td>
@@ -39,7 +35,7 @@ $jsGeneratorScript = '
     </tr>
 </template>';
 $form = '
-<div class="form-wrap">
+<div class="form-wrap" id="recordForm">
     <div class="nav  nav-tabs">
         <div class="nav-item active">
           <a class="nav-link active" href="#">Edit</a>

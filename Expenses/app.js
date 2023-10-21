@@ -24,6 +24,9 @@ function App(args){
         let urlCategory = `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=getAll&sourceContext=ExpenseCategory`;
         let urlKobHolder = `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=getAll&sourceContext=KobHolder`;
 
+        self.tabNav = new KTabNav({id:"recordForm"})
+        
+
         fetch(urlCategory).then(r=>r.json()).then(wrapped=>wrapped.subject).then(data=>{
           
             data.sort((a,b)=>(b.id-a.id)); 
@@ -53,7 +56,8 @@ function App(args){
             app.choosers.merchant.setData(data);
         });
         
-
+        
+        
         let titleHolder = document.getElementById(titleHolderId);
         titleHolder.innerText = self.title;
 

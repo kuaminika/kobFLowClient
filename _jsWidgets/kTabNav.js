@@ -1,24 +1,44 @@
 function KTabNav(options)
 {
     let self = this;
-    let defaultOptions = { classOfTab : "nav-item", id:"",classOfActiveTab:"active"};
-    self.options = options ||{};
+    let defaultOptions = { classOfTab : "nav-item",classOfActiveTab:"active"};
+    self.options ={... options , ...defaultOptions};
+    
+    
     function getAllTabs()
     {
-        return document.getElementsByClassName(classOfTab);
+        let d = document.getElementById(self.options.id);
+        return d.getElementsByClassName(self.options.classOfTab);
     }
+    self.getAllTabs = getAllTabs;
     self.deactivateAll = ()=>
     {
         let allTabs = getAllTabs();
-        allTabs.forEach(tb=>{
-            tb.className =  tb.className.remove("active");
-
-        });
+        let n = allTabs.length;
+        for(let i =0;i<n;i++)
+        {
+            let tb = allTabs[i];
+            tb.className =  tb.className.replace(self.options.classOfActiveTab,"");
+            let a =  tb.getElementsByTagName("a")[0];
+            a.className = a.className.replace(self.options.classOfActiveTab,"");
+        }
+        
     }
 
     self.activateTab = (tabName)=>{
         self.deactivateAll();
-        
+
+        let d = document.getElementById(self.options.id);
+        let tb =  d.querySelector(".nav-item[name='"+tabName+"']");
+        console.log(tb);
+
+        if(!tb) return;
+
+ 
+
+        tb.className = tb.className+" active";
+        let a =  tb.getElementsByTagName("a")[0];
+        a.className = a.className +" active";
 
     }
     

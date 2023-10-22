@@ -2,7 +2,7 @@ function KTabNav(options)
 {
     let self = this;
     let defaultOptions = { classOfTab : "nav-item",classOfActiveTab:"active"};
-    self.options ={... options , ...defaultOptions};
+    self.options ={ ...defaultOptions,... options };
     
     
     function getAllTabs()

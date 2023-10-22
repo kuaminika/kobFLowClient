@@ -5,7 +5,7 @@
  $pageArgs["configs"] = $configs;
  $pageArgs["pageName"] = "Expenses";
  $pageArgs["pageTitle"]= "Expenses";
- $pageArgs["jsScriptList"]= ["app.js?v9","../_jsWidgets/kChooser.js?v2","../_jsWidgets/kTabNav.js?v1"];
+ $pageArgs["jsScriptList"]= ["app.js?v10","../_jsWidgets/kChooser.js?v2","../_jsWidgets/kTabNav.js?v2"];
  $pageArgs["styleScriptList"]= [ "../_jsWidgets/kChooser.css?v3"];
 //TODO modify list.php template to react if not all these variables are not provided
 $pageHelper =\kuaminika\generics\PageIgniter::Ignite($pageArgs);
@@ -17,31 +17,34 @@ $jsScriptsInclusions = $pageHelper->generateJSScriptTags();
 $customJsScript = ' app.load({title :"'.$pageTitle.'"})';
 $generatedThead = '<thead>
 <tr> 
-  <th scope="col">Merchant  </th>
   <th scope="col">Category</th>
   <th scope="col">Kob holder</th>
   <th scope="col">Amount</th>
   <th scope="col">Date</th>
+  <th></th>
+  <th></th>
 </tr>
 </thead>';
 $jsGeneratorScript = '
 <template  v-for="(expense, index) in data" >
-    <tr  v-bind:id=" \'expense-\'+   expense.id"> 
-      <td>{{expense.merchantName}}</td>
+    <tr class="expense-tr" v-bind:id=" \'expense-\'+   expense.id" @click="\'app.loadRecord(\' +  expense.id  + \')\'" > 
+    
       <td>{{expense.categoryName}}</td>
       <td>{{expense.kobHolderName}}</td>
       <td>{{expense.amount}}</td>
       <td>{{expense.createdDate}}</td>
+      <td> <div v-bind:id="\'update_\'+expense.id" class="btn btn-small btn-warning">  <i class="fa fa-edit"></i></div> </td>
+      <td><div v-bind:id="\'remove_\'+expense.id" class="btn btn-small btn-danger">  <i class="fa fa-remove"></i></div></td>
     </tr>
 </template>';
 $form = '
 <div class="form-wrap" id="recordForm">
     <div class="nav  nav-tabs">
-        <div class="nav-item active">
-          <a class="nav-link active" href="#">Edit</a>
+        <div class="nav-item " name="edit">
+          <a class="nav-link " onclick="app.tabNav.activateTab(\'edit\')" href="#">Edit</a>
         </div> 
-        <div class="nav-item">
-          <a class="nav-link " href="#">Add</a>
+        <div class="nav-item active" name="add">
+          <a class="nav-link active" onclick="app.tabNav.activateTab(\'add\')" href="#">Add</a>
         </div> 
     </div>
     <form >

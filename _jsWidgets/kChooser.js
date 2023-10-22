@@ -55,6 +55,7 @@
                 quickAddProcedure(content).then(quickAddDOne);
                // quickAddDOne({id:1, name: content});
             };
+            self.selectFromInput = selectFromInput;
             function selectFromInput(name)
             {
                 let chosen  = initialData.filter(d=>(d.name == name));

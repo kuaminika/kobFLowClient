@@ -1,7 +1,7 @@
 function App(args){
   console.log("given args",args);
    args= args||{};
-
+   
    //TODO: when i click on add, it still shows old user records
    //TODO: when load, and go to edit tab, it  should show a prompt to click a record if theres none to chosen. 
    let defaultArgs= {listHolderId :"data",formHolder_id:"recordForm"};
@@ -51,34 +51,122 @@ function App(args){
       console.log("----")
     }
 
-
-    function fillForm(element)
+    function emptyForm()
     {
       let formHolder = document.getElementById(props.formHolder_id);
       let form = formHolder.querySelector("form");
+      form.reset();
+      form.isNew.value = "1" ;
+      self.choosers.merchant.reset();
+      self.choosers.category.reset( );
+      self.choosers.account.reset( );
 
-      if(element.true)
+    }
+
+    function fillForm(element)
+    {
+      
+      self.current_record = element;
+      let formHolder = document.getElementById(props.formHolder_id);
+      let form = formHolder.querySelector("form");
+      let noneToSee = formHolder.querySelector(".none-to-see");
+      noneToSee.style.display="none";
+    
+      form.style.display= "block";
+      if(element.isNew == true)
       {
-        form.reset();
-        self.choosers.merchant.init();
-        self.choosers.category.init();
-        self.choosers.account.init();
+        emptyForm();
         return ;
       }
+      console.log("about to fill form with ",element);
+      form.isNew.value = "0" ;
       form.amount.value = element.amount;
       form.description.value = element.description;
+      form.createdDate.value= element.createdDate;
       self.choosers.merchant.selectFromInput(element.merchantName);
       self.choosers.category.selectFromInput(element.categoryName);
       self.choosers.account.selectFromInput(element.kobHolderName);
       console.log(form,element,form.description);
+
+    }
+    self.loadEditForm = (element)=>{
+      
+      let formHolder = document.getElementById(props.formHolder_id);
+      let form = formHolder.querySelector("form");
+      let noneToSee = formHolder.querySelector(".none-to-see");
+      self.tabNav.activateTab("edit");
+      if(!element)
+      {
+          form.style.display= "none";
+          noneToSee.style.display="block";
+          return;
+      }
+
+      fillForm(element);
+
     }
 
+    function editRecord(record)
+    {
+      let wrap = {payLoad:record,sourceContext:"Expense"};
+      let {urlForUpdate,url}= props.urlSet;
+      postWrap(urlForUpdate,wrap).then(r => r.json())
+      .then(()=>{
+        return fetch(url);
+      })
+      .then(r=>r.json())
+      .then(payLoad=>{
+        console.log(payLoad)
+        refreshData(payLoad.subject);
+       
+
+      });
+
+    }
+
+    function addRecord(record)
+    {
+      let wrap = {payLoad:record,sourceContext:"Expense"};
+      let {urlForAdd,url}= props.urlSet;
+      postWrap(urlForAdd,wrap).then(r => r.json())  
+      .then(payLoad=>{
+        console.log(payLoad)
+        refreshData(payLoad.subject);
+        emptyForm();
+
+      });
+    }
 
     let titleHolderId = props.titleHolderId ||"titleHolder";
     self.loadRecord =(id)=>{
         self.tabNav.activateTab("edit")
 
         fillForm(self.expenses_map[id]);
+    }
+
+
+    self.doFormSubmit =()=>{
+        
+      let formHolder = document.getElementById(props.formHolder_id);
+      let form = formHolder.querySelector("form");
+      let fd = new FormData(form);
+      let formObj = Object.fromEntries(fd.entries());
+      formObj.categoryName = self.choosers.category.getChosen().name;
+      formObj.categoryId = self.choosers.category.getChosen().id;
+      formObj.kobHolderId= self.choosers.account.getChosen().id;
+      formObj.kobHolderName = self.choosers.account.getChosen().name;
+      formObj.merchantId =  self.choosers.merchant.getChosen().id;
+      formObj.merchantName = self.choosers.merchant.getChosen().name;
+ 
+      console.log(formObj);
+
+      if(formObj.isNew==true) 
+      {
+        addRecord(formObj);
+        return;
+      }
+     
+      editRecord(formObj);
     }
     self.removeRecord= (id)=>
     {
@@ -105,7 +193,7 @@ function App(args){
     self.loadAddForm = ()=>
     {
       self.tabNav.activateTab('add');
-      fillForm({new:true});
+      fillForm({isNew:true});
     }
 
     self.load = (args)=>{

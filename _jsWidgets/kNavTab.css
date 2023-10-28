@@ -1,8 +1,16 @@
 .nav.nav-tabs{
     border-bottom: 1px solid black;
 }
-.nav-tabs .nav-item.active
+.nav-tabs .nav-item .nav-link{
+    height: 105%;
+}
+.nav-tabs .nav-item .nav-link.active
 {
     border: 1px solid black;
+    border-bottom: none;
+}
+
+.nav-tabs .nav-item  
+{ 
     border-bottom: none;
 }

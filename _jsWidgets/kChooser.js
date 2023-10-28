@@ -7,15 +7,16 @@
             args = args ||{};
             let self = this;
             let contextName = args.contextName ; 
+            let name = args.name || contextName;
             let title = args.title;
-            let chosen = {id :-1, mame:"None chosen"};
+            let chosen = {id :-1, name:"None chosen"};
             let holderElementid = args.holderElementid;
             let holderElement = document.querySelector(`#${holderElementid}`);
             let initialData = args.data ||[];
             let currentData = initialData;
             let chooserInput ={};// blank obj for now
          
-            
+            self.defaultChosen = chosen;
             let map = {};
             initialData.forEach(e=>{map[e.id]=e});
             let defaultTemplateContent = `<div class="d-flex ">
@@ -27,7 +28,7 @@
                                             <div style="" class="list-wrap chooserList-hidden col-sm-offset-2 border p-2 border-primary border-1  col-sm-12">
                                                 <div class="col-sm-12">
                                                     <div class="input-group ">
-                                                        <input  type="text" class="form-control  py-0" id="${contextName}KChooserInput" placeholder="filter ${contextName} list">                                                    
+                                                        <input  type="text" class="form-control  py-0" id="${contextName}KChooserInput" name="${contextName}" placeholder="filter ${contextName} list">                                                    
                                                         <div id="${contextName}Btn"  class="btn  btn-warning py-1" type="button">Select ${contextName}</div>
                                                     </div>
                                                     <label class="control-label col-sm-10"  >Click on chosen ${contextName}:</label>
@@ -47,15 +48,15 @@
                 
                 })
 
-                return p;
-            
-            
+                return p;           
             };
+
+            self.getChosen = ()=>{ return chosen;}
            let doQuickAdd = (content,quickAddDOne)=>{
                 quickAddProcedure(content).then(quickAddDOne);
                // quickAddDOne({id:1, name: content});
             };
-            self.selectFromInput = selectFromInput;
+            self.reset= () =>{ selectFromInput(self.defaultChosen.name)}
             function selectFromInput(name)
             {
                 let chosen  = initialData.filter(d=>(d.name == name));
@@ -169,8 +170,9 @@
                 }
                 hideBtn.onclick = hideList.bind(self);
                 showBtn.onclick = showList.bind(self);
-            
+          
             }
+            self.selectFromInput = selectFromInput;
             self.init= init;
             function filterData(entered)
             {

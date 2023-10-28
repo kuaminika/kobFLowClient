@@ -5,8 +5,8 @@
  $pageArgs["configs"] = $configs;
  $pageArgs["pageName"] = "Expenses";
  $pageArgs["pageTitle"]= "Expenses";
- $pageArgs["jsScriptList"]= ["app.js?v10","../_jsWidgets/kChooser.js?v2","../_jsWidgets/kTabNav.js?v2"];
- $pageArgs["styleScriptList"]= [ "../_jsWidgets/kChooser.css?v3"];
+ $pageArgs["jsScriptList"]= ["app.js?v10","../_jsWidgets/kChooser.js?v2","../_jsWidgets/kTabNav.js?v2","../_clientTools/postWrap.js"];
+ $pageArgs["styleScriptList"]= [ "../_jsWidgets/kNavTab.css","../_jsWidgets/kChooser.css?v3"];
 //TODO modify list.php template to react if not all these variables are not provided
 $pageHelper =\kuaminika\generics\PageIgniter::Ignite($pageArgs);
 $navTmplt= $pageHelper->getNavigation(); // will be used by  /../_templates/list.php

@@ -5,7 +5,7 @@
  $pageArgs["configs"] = $configs;
  $pageArgs["pageName"] = "Expenses";
  $pageArgs["pageTitle"]= "Expenses";
- $pageArgs["jsScriptList"]= ["app.js?v10","../_jsWidgets/kChooser.js?v2","../_jsWidgets/kTabNav.js?v2","../_clientTools/postWrap.js"];
+ $pageArgs["jsScriptList"]= ["app.js?v10","app_configs.js","../_jsWidgets/kChooser.js?v2","../_jsWidgets/kTabNav.js?v2","../_clientTools/postWrap.js"];
  $pageArgs["styleScriptList"]= [ "../_jsWidgets/kNavTab.css","../_jsWidgets/kChooser.css?v3"];
 //TODO modify list.php template to react if not all these variables are not provided
 $pageHelper =\kuaminika\generics\PageIgniter::Ignite($pageArgs);
@@ -14,7 +14,7 @@ $pageName = $pageHelper->getPageName();
 $pageTitle = $pageHelper->getPageTitle();
 $cssStyleInclusions = $pageHelper->generateStyles();
 $jsScriptsInclusions = $pageHelper->generateJSScriptTags();
-$customJsScript = ' app.load({title :"'.$pageTitle.'"})';
+$customJsScript = ' app.load({title :"'.$pageTitle.'",urlSet})';
 $generatedThead = '<thead>
 <tr> 
   <th scope="col">Category</th>

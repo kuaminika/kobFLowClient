@@ -1,4 +1,5 @@
 function App(args){
+  console.log("given args",args);
    args= args||{};
 
    //TODO: when i click on add, it still shows old user records
@@ -109,14 +110,9 @@ function App(args){
 
     self.load = (args)=>{
 
+      console.log("given args at load:",args);
       const { createApp,ref } = Vue
 
-        let url = `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=getAll&sourceContext=Expense`;
-        let urlMerchants = `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=getAll&sourceContext=Merchant`;
-        let urlCategory = `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=getAll&sourceContext=ExpenseCategory`;
-        let urlKobHolder = `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=getAll&sourceContext=KobHolder`;
-        let urlForDelete=  `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=delete`;
-        args.urlSet = {url,urlMerchants,urlCategory,urlKobHolder,urlForDelete};
         self.setArgs(args);
         self.tabNav = new KTabNav({id:"recordForm"})
 

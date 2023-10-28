@@ -110,7 +110,8 @@ function App(args){
     {
       let wrap = {payLoad:record,sourceContext:"Expense"};
       let {urlForUpdate,url}= props.urlSet;
-      postWrap(urlForUpdate,wrap).then(r => r.json())
+      postWrap(urlForUpdate,wrap)
+      .then(r => r.json())
       .then(()=>{
         return fetch(url);
       })
@@ -118,9 +119,7 @@ function App(args){
       .then(payLoad=>{
         console.log(payLoad)
         refreshData(payLoad.subject);
-       
-
-      });
+            });
 
     }
 
@@ -129,12 +128,19 @@ function App(args){
       let wrap = {payLoad:record,sourceContext:"Expense"};
       let {urlForAdd,url}= props.urlSet;
       postWrap(urlForAdd,wrap).then(r => r.json())  
+      .then(()=>{
+        return fetch(url);
+      })
+      .then(r=>r.json())
       .then(payLoad=>{
         console.log(payLoad)
         refreshData(payLoad.subject);
         emptyForm();
 
       });
+
+
+
     }
 
     let titleHolderId = props.titleHolderId ||"titleHolder";

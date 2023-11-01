@@ -144,7 +144,8 @@
             </table>
           </div>
           <div class="col-md-6">
-             <?php echo isset($form)?$form:""; ?>
+             <?php //echo isset($form)?$form:""; ?>
+             <?php require_once("tmplt_form.php"); ?>
           </div>
       </div>
     </main>

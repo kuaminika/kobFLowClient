@@ -1,5 +1,7 @@
 <?php 
-require_once "../envConfigs.php";
+
+
+require_once(__DIR__."/../envConfigs.php");
 // this can change based on the site you are using
  
 $configs = $envConfigs; 

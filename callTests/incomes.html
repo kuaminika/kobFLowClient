@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family:Sans-serif
+        }
+        .button
+        {
+            padding:1%;
+            background: rgb(66, 128, 66);
+            cursor: pointer;
+            display: inline-block;
+            color:beige
+        }
+
+       
+    </style>
+
+</head>
+
+<body>
+    <nav>
+        <div class="nav-bar">
+            <div id="add" class="button">add</div>
+        </div>    
+    </nav>
+    <main>
+        <h1>summary</h1>
+        <div class="container">
+            <div class="row">
+                <div class="stage left">
+                    <div class="test-result add">
+                    </div>
+                    <div class="test-result select-all">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../_clientTools/postWrap.js"></script>
+    <script src="app_configs.js"></script>
+    <script >
+        let all = [];
+        fetch(urlSet.urlIncomes).then(r=>r.json()).then((reslt)=>{
+            console.log( reslt)
+            console.log(typeof reslt)
+            let innerStuff= ' ';
+            let incoms = reslt.subject.sort((a,b)=>b.id-a.id);
+            all = incoms;
+            reslt.subject.map((income)=>{
+                innerStuff =`
+                ${innerStuff}
+                <div style="position:relative;top:0;height:50px;border:1px solid black;margin-bottom:1%">                    
+                        <span style="position:absolute;left:3px;">Id:${income.id}</span>
+                        <div style="display:flex;flex-direction:column;position:absolute;left:3px;top:15px">
+                            <span  >Amount:${income.amount}</span>    
+                            <span  >Description:${income.description}</span>        
+                        </div>            
+                </div>  `;
+
+            });
+            innerStuff = innerStuff+ " ";
+             document.querySelector(".test-result.select-all").innerHTML= innerStuff;
+
+        })
+        document.querySelector("#add").onclick= function(){
+                let newOne = all[all.length-1];
+             //   console.log(newOne);
+                let timeNow = new Date();
+                newOne.description = `added at : ${timeNow}`;
+                let data = {payLoad:newOne,sourceContext:"Income"}
+             //   console.log(urlSet.urlForAdd)
+                //
+               // let wrap = {payLoad:specimen,sourceContext:"Expense"};
+
+                postWrap(urlSet.urlForAdd,data)
+            
+        }
+
+    </script>
+</body>
+</html>

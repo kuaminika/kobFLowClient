@@ -16,8 +16,24 @@
             display: inline-block;
             color:beige
         }
-
+        .btn{cursor: pointer;border: 1px solid darkblue;display:  inline-block;padding: 1px;border-radius: 6px;}
        
+        .btn-delete{
+            background: #ef5b5b;
+            color: #e1baba;
+        }
+        .btn-delete:hover{
+            color: #fff;
+
+        }
+        .btn-update{
+            background: #5b7eef;
+            color: #dfbbbb;           
+        }
+        .btn-update:hover{
+            color: #fff;  
+
+        }
     </style>
 
 </head>
@@ -45,7 +61,9 @@
     <script src="app_configs.js"></script>
     <script >
         let all = [];
-        fetch(urlSet.urlIncomes).then(r=>r.json()).then((reslt)=>{
+
+        
+        function drawAll (reslt){
             console.log( reslt)
             console.log(typeof reslt)
             let innerStuff= ' ';
@@ -54,11 +72,13 @@
             reslt.subject.map((income)=>{
                 innerStuff =`
                 ${innerStuff}
-                <div style="position:relative;top:0;height:50px;border:1px solid black;margin-bottom:1%">                    
-                        <span style="position:absolute;left:3px;">Id:${income.id}</span>
-                        <div style="display:flex;flex-direction:column;position:absolute;left:3px;top:15px">
+                <div style="position:relative;top:0;height:100px;border:1px solid black;margin-bottom:1%">                    
+                        <span style="">Id:${income.id}</span>
+                        <div style="display:flex;flex-direction:column;">
                             <span  >Amount:${income.amount}</span>    
-                            <span  >Description:${income.description}</span>        
+                            <span  >Description:${income.description}</div>     
+                            <div class="btn btn-delete"> delete="doDelete()"</div>
+                            <div class="btn btn-update" onclick="doIncrement()"> update -- > to increment  amount by 1</div>   
                         </div>            
                 </div>  `;
 
@@ -66,7 +86,10 @@
             innerStuff = innerStuff+ " ";
              document.querySelector(".test-result.select-all").innerHTML= innerStuff;
 
-        })
+        }
+        
+        
+        fetch(urlSet.urlIncomes).then(r=>r.json()).then(drawAll)
         document.querySelector("#add").onclick= function(){
                 let newOne = all[all.length-1];
              //   console.log(newOne);
@@ -76,9 +99,14 @@
              //   console.log(urlSet.urlForAdd)
                 //
                // let wrap = {payLoad:specimen,sourceContext:"Expense"};
-
-                postWrap(urlSet.urlForAdd,data)
-            
+                console.log(data,JSON.stringify(data));
+              let addPromise =   postWrap(urlSet.urlForAdd,data)
+             addPromise.then(r=>r.json()).then((receipt)=>{
+             console.log("receipt",receipt);
+                console.log("finally ill search all")
+               return fetch(urlSet.urlIncomes)})
+               .then((r)=>r.json())
+               .then(drawAll);
         }
 
     </script>

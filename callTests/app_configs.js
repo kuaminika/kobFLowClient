@@ -8,7 +8,7 @@ var urlSet = {};
     let urlForDelete=  `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=delete`;
     let urlForAdd = `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=add`;
     let urlForUpdate =  `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=update`;
-    let urlIncomes=  `https://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=getAll&sourceContext=Income`;
+    let urlIncomes=  `http://dev.korosol.com/kobFLow/KobFlow/API/index.php?context=Flows&requestAction=getAll&sourceContext=Income`;
 
     set.values = {url,urlMerchants,urlCategory,urlKobHolder,urlForDelete,urlForUpdate,urlForAdd,urlIncomes};
     console.log(set);

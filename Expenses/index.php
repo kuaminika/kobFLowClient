@@ -5,7 +5,7 @@
  $pageArgs["configs"] = $configs;
  $pageArgs["pageName"] = "Expenses";
  $pageArgs["pageTitle"]= "Expenses";
- $pageArgs["jsScriptList"]= ["../_clientTools/app.js?v10","app_configs.js","app_expense.js","../_jsWidgets/kChooser.js?v2","../_jsWidgets/kTabNav.js?v2","../_clientTools/postWrap.js"];
+ $pageArgs["jsScriptList"]= ["../_clientTools/currentUser.js?v1","../_clientTools/app.js?v10","app_configs.js","app_expense.js","../_jsWidgets/kChooser.js?v2","../_jsWidgets/kTabNav.js?v2","../_clientTools/postWrap.js"];
  $pageArgs["styleScriptList"]= [ "../_jsWidgets/kNavTab.css","../_jsWidgets/kChooser.css?v3"];
 //TODO modify list.php template to react if not all these variables are not provided
 $pageHelper =\kuaminika\generics\PageIgniter::Ignite($pageArgs);
@@ -14,7 +14,7 @@ $pageName = $pageHelper->getPageName();
 $pageTitle = $pageHelper->getPageTitle();
 $cssStyleInclusions = $pageHelper->generateStyles();
 $jsScriptsInclusions = $pageHelper->generateJSScriptTags();
-$customJsScript = ' app.load({title :"'.$pageTitle.'",sourceContext:"Expense",urlSet})';
+$customJsScript = ' app.load({title :"'.$pageTitle.'",currentUser:UserToolService.currentUserTool.getUserInfo(),sourceContext:"Expense",urlSet})';
 $generatedThead = '<thead>
 <tr> 
   <th scope="col">Category</th>

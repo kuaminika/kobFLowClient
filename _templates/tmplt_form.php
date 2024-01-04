@@ -33,6 +33,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="isNew" value="1" />
+                    <input type="hidden" name="id" value="0" />
                     <?php if($showSource){ ?>
                     <div id="merchantField" style="display:<?php echo $source=="merchant"?"block":"none"; ?>" class="form-group mt-1"> </div>
                     <div id="sourceField" style="display:<?php echo $source=="source"?"block":"none"; ?>"  class="form-group mt-1"> </div>

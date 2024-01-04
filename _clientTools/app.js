@@ -4,6 +4,8 @@ function App(args){
    
    //TODO: when i click on add, it still shows old user records
    //TODO: when load, and go to edit tab, it  should show a prompt to click a record if theres none to chosen. 
+   //TODO: update currentuser to make it work with currentUser.js
+   //TODO: update forms such that if http requests fails, a message appears. 
    let defaultArgs= {listHolderId :"data",formHolder_id:"recordForm"};
    let props  = {...defaultArgs,...args}
     let self = this;
@@ -66,7 +68,7 @@ function App(args){
       self.choosers.merchant.reset();
       self.choosers.category.reset( );
       self.choosers.account.reset( );
-
+      self.choosers.incomeSource.reset();
     }
 
     function fillForm(element)
@@ -86,12 +88,14 @@ function App(args){
       }
       console.log("about to fill form with ",element);
       form.isNew.value = "0" ;
+      form.id.value = element.id;
       form.amount.value = element.amount;
       form.description.value = element.description;
       form.createdDate.value= element.createdDate;
       self.choosers.merchant.selectFromInput(element.merchantName);
       self.choosers.category.selectFromInput(element.categoryName);
       self.choosers.account.selectFromInput(element.kobHolderName);
+      self.choosers.incomeSource.selectFromInput(element.sourceName);
       console.log(form,element,form.description);
 
     }
@@ -169,7 +173,10 @@ function App(args){
       formObj.kobHolderName = self.choosers.account.getChosen().name;
       formObj.merchantId =  self.choosers.merchant.getChosen().id;
       formObj.merchantName = self.choosers.merchant.getChosen().name;
- 
+      formObj.sourceId = self.choosers.incomeSource.getChosen().id;
+      formObj.sourceName = self.choosers.incomeSource.getChosen().name;
+      formObj.ownerId = props.currentUser.id;
+      formObj.id = parseInt(formObj.id);
       console.log(formObj);
 
       if(formObj.isNew==true) 

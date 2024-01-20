@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family:Sans-serif
+        }
+        .button
+        {
+            padding:1%;
+            background: rgb(66, 128, 66);
+            cursor: pointer;
+            display: inline-block;
+            color:beige
+        }
+        .btn{cursor: pointer;border: 1px solid darkblue;display:  inline-block;padding: 1px;border-radius: 6px;}
+       
+        .btn-delete{
+            background: #ef5b5b;
+            color: #e1baba;
+        }
+        .btn-delete:hover{
+            color: #fff;
+
+        }
+        .btn-update{
+            background: #5b7eef;
+            color: #dfbbbb;           
+        }
+        .btn-update:hover{
+            color: #fff;  
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav>
+        <div class="nav-bar">
+            <div id="add" class="button">add</div>
+        </div>    
+    </nav>
+    <main>
+        <h1>summary</h1>
+        <div class="container">
+            <div class="row">
+                <div class="stage left">
+                    <div class="test-result add">
+                    </div>
+                    <div class="test-result select-all">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../_clientTools/postWrap.js"></script>
+    <script src="app_configs.js"></script>
+    <script >
+        let all = [];
+
+        
+        function drawAll (reslt){
+            console.log( reslt)
+            console.log(typeof reslt)
+            let innerStuff= ' ';
+            let incoms = reslt.subject.sort((a,b)=>b.id-a.id);
+            all = incoms;
+            reslt.subject.map((income)=>{
+                innerStuff =`
+                ${innerStuff}
+                <div style="position:relative;top:0;height:100px;border:1px solid black;margin-bottom:1%">                    
+                        <span style="">Id:${income.id}</span>
+                        <div style="display:flex;flex-direction:column;">
+                            <span  >Amount:${income.amount}</span>    
+                            <span  >Description:${income.description}</div>     
+                            <div class="btn btn-delete"> delete="doDelete()"</div>
+                            <div class="btn btn-update" onclick="doIncrement()"> update -- > to increment  amount by 1</div>   
+                        </div>            
+                </div>  `;
+
+            });
+            innerStuff = innerStuff+ " ";
+             document.querySelector(".test-result.select-all").innerHTML= innerStuff;
+
+        }
+        
+        
+        fetch(urlSet.urlIncomes).then(r=>r.json()).then(drawAll)
+        document.querySelector("#add").onclick= function(){
+                let newOne = all[all.length-1];
+             //   console.log(newOne);
+                let timeNow = new Date();
+                newOne.description = `added at : ${timeNow}`;
+                let data = {payLoad:newOne,sourceContext:"Income"}
+             //   console.log(urlSet.urlForAdd)
+                //
+               // let wrap = {payLoad:specimen,sourceContext:"Expense"};
+                console.log(data,JSON.stringify(data));
+              let addPromise =   postWrap(urlSet.urlForAdd,data)
+             addPromise.then(r=>r.json()).then((receipt)=>{
+             console.log("receipt",receipt);
+                console.log("finally ill search all")
+               return fetch(urlSet.urlIncomes)})
+               .then((r)=>r.json())
+               .then(drawAll);
+        }
+
+    </script>
+</body>
+</html>
